@@ -1,0 +1,39 @@
+body {
+  background-color: grey;
+}
+#board {
+  justify-content: center;
+  align-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+/* Tipos de celdas del tablero */
+/*Default */.cell {
+  width: 50px;
+  height: 50px;
+  background-color: #cccccc;
+  border-top: 2px solid #f3f3f3;
+  border-left: 2px solid #f3f3f3;
+  border-bottom: 2px solid #999999;
+  border-right: 2px solid #999999;
+  padding: 0px;
+  border-collapse: collapse;
+  text-align: center;
+  display: f;
+}
+.cell:hover {
+  background-color: darkgray;
+}
+/*Mina Explota*/.mined{
+  background-color: red;
+  justify-content: center;
+  align-content: center;
+}
+/*Celda Descubierta*/ .exposed{
+  background-color: #bbbbbb;
+  border: 1px solid #999999;
+}
+#inputNumber{
+  margin-bottom: 50px;
+}
