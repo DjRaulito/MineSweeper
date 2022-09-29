@@ -1,29 +1,30 @@
 body {
-  background-color: grey;
+  background-color: #4B4453;
 }
 #board {
-  justify-content: center;
-  align-content: center;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
   align-items: center;
 }
 /* Tipos de celdas del tablero */
-/*Default */.cell {
+/*Default */.hiddenCell {
   width: 50px;
   height: 50px;
-  background-color: #cccccc;
-  border-top: 2px solid #f3f3f3;
-  border-left: 2px solid #f3f3f3;
-  border-bottom: 2px solid #999999;
-  border-right: 2px solid #999999;
+  /* background-color: #cccccc; */
+  background-color: #00896F;
+  border-top: 2px solid #00C0A3;
+  border-left: 2px solid #00C0A3;
+  border-bottom: 2px solid black;
+  border-right: 2px solid #000000;
   padding: 0px;
   border-collapse: collapse;
   text-align: center;
-  display: f;
+
 }
-.cell:hover {
-  background-color: darkgray;
+.hiddenCell:hover {
+  background-color: #B0A8B9;
 }
 /*Mina Explota*/.mined{
   background-color: red;
