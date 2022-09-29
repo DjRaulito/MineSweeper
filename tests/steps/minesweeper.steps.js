@@ -18,3 +18,9 @@ Then("on the board all the cells should be hidden", async () => {
 	const numHiddenCellsBoard = await page.$$('[class="hiddenCell"]');
 	expect(numHiddenCellsBoard.length).toBe(numBoardDivs);
 });
+Then('the value of {string} is {string}', async (string, string2) =>{
+	let numFlags = await page.locator(`[id="${string}"]`).innerText();
+
+
+	expect(numFlags).toBe(string2);
+  });

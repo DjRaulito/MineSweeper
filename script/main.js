@@ -28,3 +28,10 @@ function ShowBoard() {
     }
   }  
 }
+
+function GenerateMockData() {
+  let url = window.location.search.split("?");
+  let MockData = url[1].split("-");
+  rows = MockData.length;
+  columns = MockData[0].length;
+}
