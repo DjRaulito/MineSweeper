@@ -29,8 +29,9 @@ Then the value of "flagCounter" is "10"
 Scenario: Default game timer value
 Then the value of "timer" is "0"
 
-# Scenario: Default Face on startup
-# Then the face should be "serious"
+@done
+Scenario: Default Face on startup
+Then the face should be "serious"
 
 
 # #Reveal
