@@ -8,6 +8,9 @@ body {
   align-content: center;
   align-items: center;
 }
+#board div *{
+  font-size: 50px;
+}
 /* Tipos de celdas del tablero */
 /*Default */.hiddenCell {
   width: 50px;
@@ -21,19 +24,26 @@ body {
   padding: 0px;
   border-collapse: collapse;
   text-align: center;
-
 }
 .hiddenCell:hover {
   background-color: #B0A8B9;
 }
 /*Mina Explota*/.mined{
   background-color: red;
-  justify-content: center;
-  align-content: center;
+  /* justify-content: center;
+  align-content: center; */
 }
 /*Celda Descubierta*/ .exposed{
+  width: 50px;
+  height: 50px;
   background-color: #bbbbbb;
-  border: 1px solid #999999;
+  border-top: 2px solid #999999;
+  border-left: 2px solid #999999;
+  border-bottom: 2px solid #999999;
+  border-right: 2px solid #999999;
+  padding: 0px;
+  border-collapse: collapse;
+  text-align: center;
 }
 #inputNumber{
   margin-bottom: 50px;

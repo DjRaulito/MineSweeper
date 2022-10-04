@@ -4,7 +4,7 @@ Feature: Minesweeper
 
 # "n" = cellNumber
 # "o" = cell
-# "0" = cell empty
+# "" = cell empty
 # "." = hidden cell
 # "!" = mined symbol
 # "?" = uncertain symbol
@@ -31,15 +31,22 @@ Then the value of "timer" is "0"
 
 @done
 Scenario: Default Face on startup
-Then the face should be "serious"
+Then the face should be "bored"
 
 
 # #Reveal
 # # [CELL MINED]
+# Revelar cela
+@current
+Scenario: Reavealing a cell without mine and without surrounding mines, will be empty 
+Given the user loads in the board the following MockData: "ooo-ooo-ooo"
+When the user Reveal the cell "2-2"
+Then the cell "2-2" should be "" 
+
 # Scenario: Reveal cell mine and finish the game 
 # Given the user loads in the board the following MockData: "*o"
 # When the user Reveal the cell "1-1"
-# Then the user should be "lose"
+# Then the user should "lose"
 
 # Scenario: Reveal cell mine and mine is exposed
 # Given the user loads in the board the following MockData: "*o"
@@ -53,7 +60,6 @@ Then the face should be "serious"
 # And the user reveal the cell "2-1"
 # Then the user should be "won"
 
-# # definir un tablero para hacer el test de las minas
 # Scenario Outline: Reveal cell with not mine but is close and displaying the number of the mines is close [NUM CELL]
 # Given the user loads in the board the following MockData: "<board>"
 # When the user Reveal the cell "2-2"
@@ -71,10 +77,7 @@ Then the face should be "serious"
 # | ***-*o*-***   | 8                 |
 
 # # [EMPTY CELL]
-# Scenario: Reavealing a cell without mine and without surrounding mines, will be empty 
-# Given the user loads in the board the following MockData: "ooo-ooo-ooo"
-# When the user Reveal the cell "2-2"
-# Then the cell "2-2" should be "empty"
+
 
 # Scenario: Revealing surrounding cells when an empty cell is revealed
 # Given the user loads in the board the following MockData: "ooo-ooo-ooo"
@@ -216,3 +219,6 @@ Then the face should be "serious"
 # When the user Reveal the cell "1-2"
 # And the user Reveal the cell "2-1"
 # Then the "face" should be "happy"
+
+
+# comprobar si solo son * y o
