@@ -33,31 +33,31 @@ Feature: Minesweeper
     Scenario: Default Face on startup
         Then the face should be "bored"
 
-    # #Reveal
+    # #reveal
     # Revelar cela
     @done
     Scenario: Reavealing a cell without mine and without surrounding mines, will be empty
         Given the user loads in the board the following MockData: "ooo-ooo-ooo"
-        When the user Reveal the cell "1-1"
+        When the user reveal the cell "1-1"
         Then the cell "2-2" should be ""
 
     @done
     Scenario: Reveal cell mine and mine is exposed
         Given the user loads in the board the following MockData: "*o"
-        When the user Reveal the cell "0-0"
+        When the user reveal the cell "0-0"
         Then the cell "0-0" should be mine
     
     @done
     Scenario: Reveal cell mine and finish the game
         Given the user loads in the board the following MockData: "*o"
-        When the user Reveal the cell "0-0"
+        When the user reveal the cell "0-0"
         Then the user should lose
-    @current
-    Scenario: Revealling all the mines when the game is Over
+    @done
+    Scenario: revealling all the mines when the game is Over
         Given the user loads in the board the following MockData: "**-o*"
-        When the user discover the cell "0-1"
-        Then the user should be a "mine" on the cell "0-0"
-        And the user should be a "mine" on the cell "1-1"
+        When the user reveal the cell "0-1"
+        Then the user should be a mine on the cell "0-0"
+        And the user should be a mine on the cell "1-1"
 
     Scenario: The user win the game when reveal all the cells that is not mine
         Given the user loads in the board the following MockData: "*o-o*"
@@ -65,9 +65,9 @@ Feature: Minesweeper
         And the user reveal the cell "1-0"
         Then the user should be "won"
 
-    Scenario Outline: Reveal cell with not mine but is close and displaying the number of the mines is close [NUM CELL]
+    Scenario Outline: reveal cell with not mine but is close and displaying the number of the mines is close [NUM CELL]
         Given the user loads in the board the following MockData: "<board>"
-        When the user Reveal the cell "0-0"
+        When the user reveal the cell "0-0"
         Then the cell "0-0" should be "<NumberMinesClose>"
 
         Examples:
@@ -82,19 +82,19 @@ Feature: Minesweeper
             | ***-*o*-*** | 8                |
 
     # [EMPTY CELL]
-    # Scenario: Revealing surrounding cells when an empty cell is revealed
+    # Scenario: revealing surrounding cells when an empty cell is revealed
     #     Given the user loads in the board the following MockData: "ooo-ooo-ooo"
-    #     When the user Reveal the cell "1-1"
+    #     When the user reveal the cell "1-1"
     #     Then all the cells should be empty
 
     Scenario: When the user reveals all the non mined cells, all the mines will be tagged as mined symbol
         Given the user loads in the board the following MockData: "**-oo"
-        When the user discover the cell "1-0"
-        And the user discover the cell "1-1"
+        When the user reveal the cell "1-0"
+        And the user reveal the cell "1-1"
         Then the cell "0-0" should be tagged as "mined"
         And the cell "0-1" should be tagged as "mined"
 
-    # Scenario: Revealing sourronded cells when an empty cell is revealed by an adjacent cell
+    # Scenario: revealing sourronded cells when an empty cell is revealed by an adjacent cell
     # Given the user loads in the board the following MockData: "*****-*ooo*-*ooo*-*ooo*-*****"
     # When the cell "2-2" should be "0"
     # Then the cell "1-1" would be revealed and should be "5"
@@ -106,7 +106,7 @@ Feature: Minesweeper
     # And the cell "3-2" would be revealed and should be "3"
     # And the cell "3-3" would be revealed and should be "5"
 
-    Scenario: Revealing sourronded cells when an empty cell is revealed by an adjacent cell
+    Scenario: revealing sourronded cells when an empty cell is revealed by an adjacent cell
         Given the user loads in the board the following MockData:
             """
         *****
@@ -181,12 +181,12 @@ Feature: Minesweeper
 
     #Timer
     @manual
-    Scenario: The timer starts when the user Reveal the first cell
+    Scenario: The timer starts when the user reveal the first cell
         When the user reveal the cell "1-1"
         Then time begins should to add up
 
     @manual
-    Scenario: The timer stop when the user Reveal a mine
+    Scenario: The timer stop when the user reveal a mine
         When the user reveal the cell "mined"
         Then time should stop
 
@@ -213,8 +213,8 @@ Feature: Minesweeper
 
     Scenario: When the user win the game the face is happy
         Given the user loads in the board the following MockData: "*o-o*"
-        When the user Reveal the cell "0-1"
-        And the user Reveal the cell "1-0"
+        When the user reveal the cell "0-1"
+        And the user reveal the cell "1-0"
         Then the "face" should be "happy"
 
 

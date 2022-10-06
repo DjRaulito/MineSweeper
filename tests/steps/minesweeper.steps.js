@@ -46,7 +46,7 @@ Then("the face should be {string}", async function (string) {
   expect(valueID).toBe(string);
 });
 
-When("the user Reveal the cell {string}", async function (string) {
+When("the user reveal the cell {string}", async function (string) {
   let cellExposed = page.locator(`[data-testid="${string}"]`);
   await buttonClick(string);
   const classCell = await cellExposed.getAttribute("class");
@@ -72,4 +72,9 @@ Then('the cell {string} should be mine',async function (string) {
 Then('the user should lose',async function () {
   let cellExposed = await page.locator('[id="face"]').innerText();
   expect(cellExposed).toBe("sad");
+});
+
+Then('the user should be a mine on the cell {string}', async function (string) {
+  let mineCharacter = await page.locator(`[data-testid="${string}"]`).innerText();
+  expect(mineCharacter).toBe( "\u{1F4A3}");
 });

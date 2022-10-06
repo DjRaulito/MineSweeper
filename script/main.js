@@ -90,7 +90,6 @@ document.addEventListener("click", (event) => {
   let row = cell[0];
   let column = cell[1];
   // modificar el array y ponerla exposed y atraves de eso cambiar la clase
-  console.log(arrayInformation[row][column].isMine);
   if (arrayInformation[row][column].isMine) {
     arrayInformation[row][column].isRevealed = true;
     RevealAllMines();
@@ -142,8 +141,8 @@ function RevealAllMines() {
   for (let r = 0; r < arrayInformation.length; r++) {
     for (let c = 0; c < arrayInformation.length; c++) {
       if (arrayInformation[r][c].isMine) {
-        console.log(arrayInformation);
-        ShowBoard();
+        arrayInformation[r][c].isRevealed = true;
+        ShowUpdloadBoard(r,c);
       }
     }
   }
