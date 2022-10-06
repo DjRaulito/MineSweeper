@@ -8,7 +8,7 @@ BeforeAll(async () => {
   global.browser = await chromium.launch({
     headless: true, //PARA QUE NO SE VEA EN EL BROWSER = TRUE // PARA QUE SE VEA EL BROWSER = FALSE
     // headless: false, //PARA QUE NO SE VEA EN EL BROWSER = TRUE // PARA QUE SE VEA EL BROWSER = FALSE
-    slowMo: 000,      //VELOCIDAD DE HACER LOS TESTS
+    slowMo: 0000,      //VELOCIDAD DE HACER LOS TESTS
   });
 });
  

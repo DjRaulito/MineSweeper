@@ -1,39 +1,46 @@
 body {
-  background-color: #4B4453;
+  background-color: #4b4453;
 }
 #board {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  align-content: center;
+  flex-direction: column;
   align-items: center;
 }
-#board div *{
-  font-size: 50px;
-}
 /* Tipos de celdas del tablero */
-/*Default */.hiddenCell {
+/*Default */
+.hiddenCell {
   width: 50px;
   height: 50px;
-  /* background-color: #cccccc; */
-  background-color: #00896F;
-  border-top: 2px solid #00C0A3;
-  border-left: 2px solid #00C0A3;
+  background-color: #00896f;
+  border-top: 2px solid #00c0a3;
+  border-left: 2px solid #00c0a3;
   border-bottom: 2px solid black;
   border-right: 2px solid #000000;
   padding: 0px;
   border-collapse: collapse;
   text-align: center;
+  float: left;
 }
 .hiddenCell:hover {
-  background-color: #B0A8B9;
+  background-color: #b0a8b9;
 }
-/*Mina Explota*/.mined{
+/*Mina Explota*/
+.mined {
+  width: 50px;
+  height: 50px;
   background-color: red;
-  /* justify-content: center;
-  align-content: center; */
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-bottom: 2px solid black;
+  border-right: 2px solid black;
+  padding: 0px;
+  border-collapse: collapse;
+  text-align: center;
+  float: left;
 }
-/*Celda Descubierta*/ .exposed{
+/*Celda Descubierta*/
+.exposed {
   width: 50px;
   height: 50px;
   background-color: #bbbbbb;
@@ -44,7 +51,8 @@ body {
   padding: 0px;
   border-collapse: collapse;
   text-align: center;
+  float: left;
 }
-#inputNumber{
+#inputNumber {
   margin-bottom: 50px;
 }
