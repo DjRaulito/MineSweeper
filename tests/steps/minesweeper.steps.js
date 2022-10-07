@@ -2,6 +2,7 @@
 const { Given, When, Then } = require("@cucumber/cucumber");
 const { expect } = require("@playwright/test");
 const url = "http://127.0.0.1:5501";
+// const url = "http://127.0.0.1:3000";
 
 // const url = 'https://github.com/DjRaulito/MineSweeper';
 
@@ -26,6 +27,8 @@ Given(
   "the user loads in the board the following MockData: {string}",
   async function (string) {
     let urlMockData = "http://127.0.0.1:5501?" + string;
+    // let urlMockData = "http://127.0.0.1:3000?" + string;
+
     await page.goto(urlMockData);
   }
 );
@@ -77,4 +80,9 @@ Then('the user should lose',async function () {
 Then('the user should be a mine on the cell {string}', async function (string) {
   let mineCharacter = await page.locator(`[data-testid="${string}"]`).innerText();
   expect(mineCharacter).toBe( "\u{1F4A3}");
+});
+
+Then('the user should be {string}',async function (string) {
+  let cellExposed = await page.locator('[id="face"]').innerText();
+  expect(cellExposed).toBe("happy");
 });

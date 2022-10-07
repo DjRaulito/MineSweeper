@@ -58,7 +58,7 @@ Feature: Minesweeper
         When the user reveal the cell "0-1"
         Then the user should be a mine on the cell "0-0"
         And the user should be a mine on the cell "1-1"
-
+    @current
     Scenario: The user win the game when reveal all the cells that is not mine
         Given the user loads in the board the following MockData: "*o-o*"
         When the user reveal the cell "0-1"
