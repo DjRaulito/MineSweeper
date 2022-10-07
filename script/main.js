@@ -167,18 +167,17 @@ function RevealAllMines() {
     }
   }
 }
-function NumAdjacentMines(r, c) {
+function NumberAdjacentMines(r, c) {
   let numMinesSurrounding = 0;
   for (let row = 0; row < 3; row++) {
     for (let column = 0; column < 3; column++) {
       try {
-        if (arrayInformation[r - 1 + row][c - 1 + column].isMine == true) {
-          
+        if (arrayInformation[r - 1 + row][c - 1 + column].isMine == true) { 
           numMinesSurrounding++  
           arrayInformation[r][c].numberOfMinesAround = numMinesSurrounding; 
         }
       } catch {
-        console.log("eres bobo que te sales del rango anda")
+        console.log("Te has salido del tablero")
       }
     }
   }

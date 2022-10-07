@@ -52,23 +52,26 @@ Feature: Minesweeper
         Given the user loads in the board the following MockData: "*o"
         When the user reveal the cell "0-0"
         Then the user should lose
+
     @done
     Scenario: revealling all the mines when the game is Over
         Given the user loads in the board the following MockData: "**-o*"
         When the user reveal the cell "0-1"
         Then the user should be a mine on the cell "0-0"
         And the user should be a mine on the cell "1-1"
-    @current
+
+    @done
     Scenario: The user win the game when reveal all the cells that is not mine
         Given the user loads in the board the following MockData: "*o-o*"
         When the user reveal the cell "0-1"
         And the user reveal the cell "1-0"
         Then the user should be "won"
 
+    @current
     Scenario Outline: reveal cell with not mine but is close and displaying the number of the mines is close [NUM CELL]
         Given the user loads in the board the following MockData: "<board>"
-        When the user reveal the cell "0-0"
-        Then the cell "0-0" should be "<NumberMinesClose>"
+        When the user reveal the cell "1-1"
+        Then the cell "1-1" should be "<NumberMinesClose>"
 
         Examples:
             | board       | NumberMinesClose |
