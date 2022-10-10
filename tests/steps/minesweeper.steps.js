@@ -107,3 +107,13 @@ Then('the cell {string} would be revealed and should be {string}',async function
   expect(cellClicked).toBe(string2);
 });
 
+When('the user tags as {string} the cell {string}',async function (string, string2) {
+  await buttonRightClick(string2);
+  let cellTagged = await page.locator(`[data-testid="${string2}"]`).innerText();
+  if (string == "mined") {
+    string = "\u{1F6A9}";
+  }else if(string2 == "uncertain"){
+    string = "\u{2049}";
+  }
+  expect(cellTagged).toBe(string);
+});

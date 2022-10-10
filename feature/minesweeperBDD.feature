@@ -133,7 +133,7 @@ Feature: Minesweeper
 
 
     #Flag(Mined Symbol)
-    @current
+    @done
     Scenario: Tagging a cell as mined when the user suspects that the cell contains a mine
         When the user tags as "mined" the cell "2-2"
         Then the cell "2-2" should be tagged as "mined"
