@@ -47,9 +47,7 @@ function CreateBoardInformation() {
 }
 
 function ShowBoard() {
-  while (document.getElementById("board").firstChild) {
-    document.getElementById("board").removeChild(document.getElementById("board").firstChild);
-  }
+  DeleteBoard();
   for (let r = 0; r < rows; r++) {
     let row = document.createElement("div");
     row.setAttribute("id", "row" + r);
@@ -65,7 +63,6 @@ function ShowBoard() {
         cell = cell.split("-");
         let row = cell[0];
         let column = cell[1];
-        // modificar el array y ponerla exposed y atraves de eso cambiar la clase
         if (arrayInformation[row][column].isRevealed == false) {
           if (arrayInformation[row][column].isMine) {
             arrayInformation[row][column].isRevealed = true;
@@ -73,12 +70,14 @@ function ShowBoard() {
           } else {
             arrayInformation[row][column].isRevealed = true;
             cellsRevealed++;
+            NumAdjacentMines(r, c);
+            RevealAdjacentCells(r, c);
             ShowBoard();
           }
-        } else {  
+        } else {
         }
       });
-      newDiv.addEventListener("contextmenu",(event) =>{
+      newDiv.addEventListener("contextmenu", (event) => {
         event.preventDefault();
         TaggCell(newDiv);
       });
@@ -87,10 +86,19 @@ function ShowBoard() {
     }
   }
 }
-
+function DeleteBoard() {
+  while (document.getElementById("board").firstChild) {
+    document
+      .getElementById("board")
+      .removeChild(document.getElementById("board").firstChild);
+  }
+}
 function ShowUpdloadBoard(r, c) {
   let cell = document.getElementById(r + "-" + c);
-  if (arrayInformation[r][c].isMine == true && arrayInformation[r][c].isRevealed == true) {
+  if (
+    arrayInformation[r][c].isMine == true &&
+    arrayInformation[r][c].isRevealed == true
+  ) {
     cell.classList.add("mined");
     cell.classList.remove("hiddenCell");
     cell.classList.add("unHiddenCell");
@@ -98,6 +106,7 @@ function ShowUpdloadBoard(r, c) {
     GameStatus(r, c);
   } else if (arrayInformation[r][c].isRevealed == true) {
     NumAdjacentMines(r, c);
+    RevealAdjacentCells(r, c);
     cell.classList.add("exposed");
     cell.classList.remove("hiddenCell");
     cell.classList.add("unHiddenCell");
@@ -151,8 +160,7 @@ function PlaceMinesMockData() {
 function GameStatus(row, column) {
   if (arrayInformation[row][column].isMine) {
     document.getElementById("face").innerHTML = "sad";
-  } else if (cellsRevealed == (rows * columns) - minesPlaced) {
-
+  } else if (cellsRevealed == rows * columns - minesPlaced) {
     document.getElementById("face").innerHTML = "happy";
   }
 }
@@ -167,27 +175,46 @@ function RevealAllMines() {
     }
   }
 }
-function NumberAdjacentMines(r, c) {
+
+function NumAdjacentMines(r, c) {
   let numMinesSurrounding = 0;
   for (let row = 0; row < 3; row++) {
     for (let column = 0; column < 3; column++) {
       try {
-        if (arrayInformation[r - 1 + row][c - 1 + column].isMine == true) { 
-          numMinesSurrounding++  
-          arrayInformation[r][c].numberOfMinesAround = numMinesSurrounding; 
+        if (arrayInformation[r - 1 + row][c - 1 + column].isMine == true) {
+          numMinesSurrounding++;
+          arrayInformation[r][c].numberOfMinesAround = numMinesSurrounding;
         }
       } catch {
-        console.log("Te has salido del tablero")
+        // console.log("eres bobo que te sales del rango anda");
       }
     }
   }
 }
+function RevealAdjacentCells(r, c) {
+  if (arrayInformation[r][c].numberOfMinesAround == 0) {
+    for (let row = 0; row < 3; row++) {
+      for (let column = 0; column < 3; column++) {
+        try {
+        if (arrayInformation[r - 1 + row][c - 1 + column].isMine == false){
+          arrayInformation[r - 1 + row][c - 1 + column].isRevealed = true
+          NumAdjacentMines(r - 1 + row,c - 1 + column);
+          
+        }
+      } catch {
+        // console.log("eres bobo que te sales del rango anda");
+      }
+      }
+    }
+  }
+}
+
 function TaggCell(cellClicked) {
   if (cellClicked.innerHTML == "") {
     cellClicked.innerHTML = "🚩";
-  }else if (cellClicked.innerHTML == "🚩") {
-    cellClicked.innerHTML = "❓"
-  }else{
+  } else if (cellClicked.innerHTML == "🚩") {
+    cellClicked.innerHTML = "❓";
+  } else {
     cellClicked.innerHTML = "";
   }
 }

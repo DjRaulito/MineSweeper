@@ -39,14 +39,14 @@ Feature: Minesweeper
     Scenario: Reavealing a cell without mine and without surrounding mines, will be empty
         Given the user loads in the board the following MockData: "ooo-ooo-ooo"
         When the user reveal the cell "1-1"
-        Then the cell "2-2" should be ""
+        Then the cell "2-2" should be "0"
 
     @done
     Scenario: Reveal cell mine and mine is exposed
         Given the user loads in the board the following MockData: "*o"
         When the user reveal the cell "0-0"
         Then the cell "0-0" should be mine
-    
+
     @done
     Scenario: Reveal cell mine and finish the game
         Given the user loads in the board the following MockData: "*o"
@@ -65,9 +65,9 @@ Feature: Minesweeper
         Given the user loads in the board the following MockData: "*o-o*"
         When the user reveal the cell "0-1"
         And the user reveal the cell "1-0"
-        Then the user should be "won"
+        Then the user should be won
 
-    @current
+    @done
     Scenario Outline: reveal cell with not mine but is close and displaying the number of the mines is close [NUM CELL]
         Given the user loads in the board the following MockData: "<board>"
         When the user reveal the cell "1-1"
@@ -90,46 +90,50 @@ Feature: Minesweeper
     #     When the user reveal the cell "1-1"
     #     Then all the cells should be empty
 
+    @failed
     Scenario: When the user reveals all the non mined cells, all the mines will be tagged as mined symbol
         Given the user loads in the board the following MockData: "**-oo"
         When the user reveal the cell "1-0"
         And the user reveal the cell "1-1"
         Then the cell "0-0" should be tagged as "mined"
         And the cell "0-1" should be tagged as "mined"
+    
+    @done
+    Scenario: revealing sourronded cells when an empty cell is revealed by an adjacent cell
+    Given the user loads in the board the following MockData: "*****-*ooo*-*ooo*-*ooo*-*****"
+    When the user reveal the cell "2-2"
+    And the cell "2-2" should be "0"
+    Then the cell "1-1" would be revealed and should be "5"
+    And the cell "1-2" would be revealed and should be "3"
+    And the cell "1-3" would be revealed and should be "5"
+    And the cell "2-1" would be revealed and should be "3"
+    And the cell "2-3" would be revealed and should be "3"
+    And the cell "3-1" would be revealed and should be "5"
+    And the cell "3-2" would be revealed and should be "3"
+    And the cell "3-3" would be revealed and should be "5"
 
     # Scenario: revealing sourronded cells when an empty cell is revealed by an adjacent cell
-    # Given the user loads in the board the following MockData: "*****-*ooo*-*ooo*-*ooo*-*****"
-    # When the cell "2-2" should be "0"
-    # Then the cell "1-1" would be revealed and should be "5"
-    # And the cell "1-2" would be revealed and should be "3"
-    # And the cell "1-3" would be revealed and should be "5"
-    # And the cell "2-1" would be revealed and should be "3"
-    # And the cell "2-3" would be revealed and should be "3"
-    # And the cell "3-1" would be revealed and should be "5"
-    # And the cell "3-2" would be revealed and should be "3"
-    # And the cell "3-3" would be revealed and should be "5"
-
-    Scenario: revealing sourronded cells when an empty cell is revealed by an adjacent cell
-        Given the user loads in the board the following MockData:
-            """
-        *****
-        *ooo*
-        *ooo*
-        *ooo*
-        *****
-            """
-        When the cell "3-3" should be "0"
-        Then the display baord should look like this: "*****-*ooo*-*ooo*-*ooo*-******"
-            """
-        *****
-        *ooo*
-        *ooo*
-        *ooo*
-        *****
-            """
+    #     Given the user loads in the board the following MockData:
+    #         """
+    #     *****
+    #     *ooo*
+    #     *ooo*
+    #     *ooo*
+    #     *****
+    #         """
+    #     When the cell "3-3" should be "0"
+    #     Then the display baord should look like this: "*****-*ooo*-*ooo*-*ooo*-******"
+    #         """
+    #     *****
+    #     *ooo*
+    #     *ooo*
+    #     *ooo*
+    #     *****
+    #         """
 
 
     #Flag(Mined Symbol)
+    @current
     Scenario: Tagging a cell as mined when the user suspects that the cell contains a mine
         When the user tags as "mined" the cell "2-2"
         Then the cell "2-2" should be tagged as "mined"

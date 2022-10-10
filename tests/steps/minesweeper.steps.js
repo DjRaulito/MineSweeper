@@ -20,6 +20,12 @@ async function buttonClick(buttonId) {
   await page.click(`[data-testid="${buttonId}"]`, { force: true });
 }
 
+async function buttonRightClick(buttonId) {
+  await page.locator(`[data-testid="${buttonId}"]`).click({ button: 'right' });
+
+}
+
+
 Given("the user opens the app", async function () {
   await page.goto(url);
 });
@@ -82,7 +88,22 @@ Then('the user should be a mine on the cell {string}', async function (string) {
   expect(mineCharacter).toBe( "\u{1F4A3}");
 });
 
-Then('the user should be {string}',async function (string) {
+Then('the user should be won',async function () {
   let cellExposed = await page.locator('[id="face"]').innerText();
   expect(cellExposed).toBe("happy");
 });
+
+Then('the cell {string} should be tagged as {string}',async function (string, string2) {
+  let cellTagged = await page.locator(`[data-testid="${string}"]`).innerText();
+  if (string2 == "mined") {
+    string2 = "\u{1F6A9}";
+  }else if(string2 == "uncertain"){
+    string2 = "\u{2049}";
+  }
+  expect(cellTagged).toBe(string2);
+});
+Then('the cell {string} would be revealed and should be {string}',async function (string, string2) {
+  let cellClicked = await page.locator(`[data-testid="${string}"]`).innerText();
+  expect(cellClicked).toBe(string2);
+});
+

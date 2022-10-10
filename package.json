@@ -6,5 +6,8 @@
   },
   "scripts": {
     "test:e2e": "cucumber-js --require cucumber.conf.js --require tests/steps/**/*.steps.js --parallel 4"
+  },
+  "dependencies": {
+    "eslint": "^8.24.0"
   }
 }
