@@ -157,7 +157,7 @@ Feature: Minesweeper
 
 
     #Question Mark (Uncertain)
-    @current
+    @done
     Scenario: Mark a cell with a question mark when i don't have enough information
         When the user tags as "uncertain" the cell "2-2"
         Then the cell "2-2" should be tagged as "uncertain"

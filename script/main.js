@@ -88,9 +88,8 @@ function ShowBoard() {
 }
 function DeleteBoard() {
   while (document.getElementById("board").firstChild) {
-    document
-      .getElementById("board")
-      .removeChild(document.getElementById("board").firstChild);
+    document.getElementById("board")
+.removeChild(document.getElementById("board").firstChild);
   }
 }
 function ShowUpdloadBoard(r, c) {
@@ -213,8 +212,8 @@ function TaggCell(cellClicked) {
   if (cellClicked.innerHTML == "") {
     cellClicked.innerHTML = "🚩";
   } else if (cellClicked.innerHTML == "🚩") {
-    cellClicked.innerHTML = "❓";
-  } else {
+    cellClicked.innerHTML = "&#63;";
+  } else if (cellClicked.innerHTML == "&#63;") {
     cellClicked.innerHTML = "";
   }
 }

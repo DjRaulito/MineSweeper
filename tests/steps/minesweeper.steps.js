@@ -104,7 +104,7 @@ Then(
     if (string2 == "mined") {
       string2 = "\u{1F6A9}";
     } else if (string2 == "uncertain") {
-      string2 = "\u{2049}";
+      string2 = "\u{003F}";
     }
     expect(cellTagged).toBe(string2);
   }
@@ -119,21 +119,17 @@ Then(
   }
 );
 
-When(
-  "the user tags as {string} the cell {string}",
-  async function (string, string2) {
+When("the user tags as {string} the cell {string}",async function (string, string2) {
     await buttonRightClick(string2);
-    let cellTagged = await page
-      .locator(`[data-testid="${string2}"]`)
-      .innerText();
     if (string == "mined") {
       string = "\u{1F6A9}";
-    } else if (string2 == "uncertain") {
-      string = "\u{2049}";
+    } else if (string == "uncertain") {
+      await buttonRightClick(string2);
+      string = "\u{003F}";
     }
+    let cellTagged = await page.locator(`[data-testid="${string2}"]`).innerText();
     expect(cellTagged).toBe(string);
-  }
-);
+  });
 
 When("the user untags the cell {string}", async function (string) {
   await buttonRightClick(string);
