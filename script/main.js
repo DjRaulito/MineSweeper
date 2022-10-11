@@ -140,8 +140,10 @@ function PlaceMinesRandom() {
       i--;
     }
     arrayInformation[rowMinedPosition][columnMinedPosition].isMine = true;
-    minesPlaced = i;
+    minesPlaced = i +1;
   }
+UploadMinesCounter();
+
 }
 
 function PlaceMinesMockData() {
@@ -154,8 +156,12 @@ function PlaceMinesMockData() {
       }
     }
   }
+UploadMinesCounter();
 }
 
+function UploadMinesCounter() {
+  document.getElementById("flagCounter").innerHTML = minesPlaced;
+}
 function GameStatus(row, column) {
   if (arrayInformation[row][column].isMine) {
     document.getElementById("face").innerHTML = "sad";
@@ -211,11 +217,16 @@ function RevealAdjacentCells(r, c) {
 function TaggCell(cellClicked) {
   if (cellClicked.innerHTML == "") {
     cellClicked.innerHTML = "🚩";
+    minesPlaced--;
   } else if (cellClicked.innerHTML == "🚩") {
+    minesPlaced++;
+    minesPlaced--;
     cellClicked.innerHTML = "&#63;";
   } else if (cellClicked.innerHTML == "&#63;") {
     cellClicked.innerHTML = "";
   }else{
     cellClicked.innerHTML = "";
   }
+UploadMinesCounter();
+
 }

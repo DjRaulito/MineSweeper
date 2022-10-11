@@ -116,7 +116,8 @@ Then(
   }
 );
 
-When("the user tags as {string} the cell {string}",async function (string, string2) {
+When("the user tags as {string} the cell {string}",
+  async function (string, string2) {
     await buttonRightClick(string2);
     if (string == "mined") {
       string = "\u{1F6A9}";
@@ -124,14 +125,17 @@ When("the user tags as {string} the cell {string}",async function (string, strin
       await buttonRightClick(string2);
       string = "\u{003F}";
     }
-  });
+  }
+);
 
 When("the user untags the cell {string}", async function (string) {
-  let cellPrevious = await page.locator(`[data-testid="${string}"]`).innerText();
+  let cellPrevious = await page
+    .locator(`[data-testid="${string}"]`)
+    .innerText();
   if (cellPrevious == "\u{1F6A9}") {
     await buttonRightClick(string);
     await buttonRightClick(string);
-  }else if(cellPrevious == "\u{003F}"){
+  } else if (cellPrevious == "\u{003F}") {
     await buttonRightClick(string);
   }
 });
@@ -145,7 +149,7 @@ When(
   "the user {int} click with righClick on the cell {string}",
   async function (int, string) {
     if (int == 1) {
-    await buttonRightClick(string);
+      await buttonRightClick(string);
     } else if (int == 2) {
       await buttonRightClick(string);
       await buttonRightClick(string);
@@ -156,39 +160,50 @@ When(
 Given(
   "the user tags as {string} on the cell {string}",
   async function (string, string2) {
-    await buttonRightClick(string2);
-    let cellTagged = await page
-      .locator(`[data-testid="${string2}"]`)
-      .innerText();
+    
     if (string == "mined") {
-      string = "\u{1F6A9}";
+      await buttonRightClick(string2);
     } else if (string2 == "uncertain") {
-      string = "\u{003F}";
+      await buttonRightClick(string2);
+      await buttonRightClick(string2);
     }
-    // expect(cellTagged).toBe(string);
   }
 );
 
-When("the user {int} click with righClick on the mined {string}",async function (int, string) {
-  if (int == 1) {
-    await buttonRightClick(string);  
-  } else if (int == 2) {
-    await buttonRightClick(string);
-    await buttonRightClick(string);  
+When(
+  "the user {int} click with righClick on the mined {string}",
+  async function (int, string) {
+    if (int == 1) {
+      await buttonRightClick(string);
+    } else if (int == 2) {
+      await buttonRightClick(string);
+      await buttonRightClick(string);
+    }
   }
-});
+);
 
-Then("the cell {string} shouldn't show information",async function (string) {
+Then("the cell {string} shouldn't show information", async function (string) {
   let cellTagged = await page.locator(`[data-testid="${string}"]`).innerText();
   expect(cellTagged).toBe("");
-  
 });
 
-When('the user {int} click with righClick on the flag {string}',async function (int, string) {
-  if (int == 1) {
-    await buttonRightClick(string);  
-  } else if (int == 2) {
-    await buttonRightClick(string);
-    await buttonRightClick(string);  
+When(
+  "the user {int} click with righClick on the flag {string}",
+  async function (int, string) {
+    if (int == 1) {
+      await buttonRightClick(string);
+    } else if (int == 2) {
+      await buttonRightClick(string);
+      await buttonRightClick(string);
+    }
   }
-  });
+);
+
+Given("the {string} is {int}", function (string, int) {
+  return 'pased';
+});
+
+Then('the counter is {int}',async function (int) {
+  let flagCounterValue =await page.locator('[data-testid="flagCounter"]').innerText();
+  expect(flagCounterValue).toBe(int.toString());
+});
