@@ -160,7 +160,7 @@ When(
     if (int == 1) {
       valueCell = "\u{1F6A9}";
     } else if (int == 2) {
-      valueCell = "\u{2049}";
+      valueCell = "\u{003F}";
     }
     expect(cellTagged).toBe(valueCell);
   }
@@ -176,7 +176,7 @@ Given(
     if (string == "mined") {
       string = "\u{1F6A9}";
     } else if (string2 == "uncertain") {
-      string = "\u{2049}";
+      string = "\u{003F}";
     }
     expect(cellTagged).toBe(string);
   }
@@ -190,7 +190,7 @@ When("the user {int} click with righClick on the mined {string}",async function 
   if (int == 1) {
     valueCell = "\u{1F6A9}";
   } else if (int == 2) {
-    valueCell = "\u{2049}";
+    valueCell = "\u{003F}";
   }
   expect(cellTagged).toBe("");
 });
@@ -200,3 +200,16 @@ Then("the cell {string} shouldn't show information",async function (string) {
   expect(cellTagged).toBe("");
   
 });
+
+When('the user {int} click with righClick on the flag {string}',async function (int, string) {
+  await buttonRightClick(string);
+  
+    let valueCell;
+    let cellTagged = await page
+      .locator(`[data-testid="${string}"]`)
+      .innerText();
+    if (int == 1) {
+      valueCell = "\u{003F}";
+    }
+    expect(cellTagged).toBe(valueCell);
+  });
