@@ -148,7 +148,8 @@ Feature: Minesweeper
     Scenario: Put a mined symbol with mouse
         When the user 1 click with righClick on the cell "2-2"
         Then the cell "2-2" should be tagged as "mined"
-
+    
+    @done
     Scenario: Remove a mined symbol with mouse
         Given the user tags as "mined" on the cell "2-2"
         When the user 2 click with righClick on the mined "2-2"
@@ -156,6 +157,7 @@ Feature: Minesweeper
 
 
     #Question Mark (Uncertain)
+    @current
     Scenario: Mark a cell with a question mark when i don't have enough information
         When the user tags as "uncertain" the cell "2-2"
         Then the cell "2-2" should be tagged as "uncertain"

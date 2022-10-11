@@ -21,10 +21,8 @@ async function buttonClick(buttonId) {
 }
 
 async function buttonRightClick(buttonId) {
-  await page.locator(`[data-testid="${buttonId}"]`).click({ button: 'right' });
-
+  await page.locator(`[data-testid="${buttonId}"]`).click({ button: "right" });
 }
-
 
 Given("the user opens the app", async function () {
   await page.goto(url);
@@ -68,78 +66,137 @@ Then("the cell {string} should be {string}", async function (string, string2) {
 });
 
 Then("the user should {string}", async function (string) {
-  let cellExposed = page.locator(`[data-testid="${string}"]`);  
+  let cellExposed = page.locator(`[data-testid="${string}"]`);
   const classCell = await cellExposed.getAttribute("class");
   expect(classCell.includes("mined")).toBeTruthy();
   expect().toBeTruthy;
 });
-Then('the cell {string} should be mine',async function (string) {
-  let mineCharacter = await page.locator(`[data-testid="${string}"]`).innerText();
-  expect(mineCharacter).toBe( "\u{1F4A3}");
+Then("the cell {string} should be mine", async function (string) {
+  let mineCharacter = await page
+    .locator(`[data-testid="${string}"]`)
+    .innerText();
+  expect(mineCharacter).toBe("\u{1F4A3}");
 });
 
-Then('the user should lose',async function () {
+Then("the user should lose", async function () {
   let cellExposed = await page.locator('[id="face"]').innerText();
   expect(cellExposed).toBe("sad");
 });
 
-Then('the user should be a mine on the cell {string}', async function (string) {
-  let mineCharacter = await page.locator(`[data-testid="${string}"]`).innerText();
-  expect(mineCharacter).toBe( "\u{1F4A3}");
+Then("the user should be a mine on the cell {string}", async function (string) {
+  let mineCharacter = await page
+    .locator(`[data-testid="${string}"]`)
+    .innerText();
+  expect(mineCharacter).toBe("\u{1F4A3}");
 });
 
-Then('the user should be won',async function () {
+Then("the user should be won", async function () {
   let cellExposed = await page.locator('[id="face"]').innerText();
   expect(cellExposed).toBe("happy");
 });
 
-Then('the cell {string} should be tagged as {string}',async function (string, string2) {
-  let cellTagged = await page.locator(`[data-testid="${string}"]`).innerText();
-  if (string2 == "mined") {
-    string2 = "\u{1F6A9}";
-  }else if(string2 == "uncertain"){
-    string2 = "\u{2049}";
+Then(
+  "the cell {string} should be tagged as {string}",
+  async function (string, string2) {
+    let cellTagged = await page
+      .locator(`[data-testid="${string}"]`)
+      .innerText();
+    if (string2 == "mined") {
+      string2 = "\u{1F6A9}";
+    } else if (string2 == "uncertain") {
+      string2 = "\u{2049}";
+    }
+    expect(cellTagged).toBe(string2);
   }
-  expect(cellTagged).toBe(string2);
-});
-Then('the cell {string} would be revealed and should be {string}',async function (string, string2) {
-  let cellClicked = await page.locator(`[data-testid="${string}"]`).innerText();
-  expect(cellClicked).toBe(string2);
-});
-
-When('the user tags as {string} the cell {string}',async function (string, string2) {
-  await buttonRightClick(string2);
-  let cellTagged = await page.locator(`[data-testid="${string2}"]`).innerText();
-  if (string == "mined") {
-    string = "\u{1F6A9}";
-  }else if(string2 == "uncertain"){
-    string = "\u{2049}";
+);
+Then(
+  "the cell {string} would be revealed and should be {string}",
+  async function (string, string2) {
+    let cellClicked = await page
+      .locator(`[data-testid="${string}"]`)
+      .innerText();
+    expect(cellClicked).toBe(string2);
   }
-  expect(cellTagged).toBe(string);
-});
+);
 
-When('the user untags the cell {string}',async function (string) {
+When(
+  "the user tags as {string} the cell {string}",
+  async function (string, string2) {
+    await buttonRightClick(string2);
+    let cellTagged = await page
+      .locator(`[data-testid="${string2}"]`)
+      .innerText();
+    if (string == "mined") {
+      string = "\u{1F6A9}";
+    } else if (string2 == "uncertain") {
+      string = "\u{2049}";
+    }
+    expect(cellTagged).toBe(string);
+  }
+);
+
+When("the user untags the cell {string}", async function (string) {
   await buttonRightClick(string);
   await buttonRightClick(string);
   // await buttonRightClick(string);
   let cellTagged = await page.locator(`[data-testid="${string}"]`).innerText();
 
-  expect(cellTagged).toBeEmpty();
+  expect(cellTagged).toBe("");
 });
 
-Then('the cell {string} shouldn\'t be tagged', async function (string) {
-    let cellTagged = await page.locator(`[data-testid="${string}"]`).innerText();
-  expect(cellTagged).toBeEmpty();
+Then("the cell {string} shouldn't be tagged", async function (string) {
+  let cellTagged = await page.locator(`[data-testid="${string}"]`).innerText();
+  expect(cellTagged).toBe("");
 });
 
-When('the user {int} click with righClick on the cell {string}',async function (int, string) {
+When(
+  "the user {int} click with righClick on the cell {string}",
+  async function (int, string) {
+    await buttonRightClick(string);
+    let valueCell;
+    let cellTagged = await page
+      .locator(`[data-testid="${string}"]`)
+      .innerText();
+    if (int == 1) {
+      valueCell = "\u{1F6A9}";
+    } else if (int == 2) {
+      valueCell = "\u{2049}";
+    }
+    expect(cellTagged).toBe(valueCell);
+  }
+);
+
+Given(
+  "the user tags as {string} on the cell {string}",
+  async function (string, string2) {
+    await buttonRightClick(string2);
+    let cellTagged = await page
+      .locator(`[data-testid="${string2}"]`)
+      .innerText();
+    if (string == "mined") {
+      string = "\u{1F6A9}";
+    } else if (string2 == "uncertain") {
+      string = "\u{2049}";
+    }
+    expect(cellTagged).toBe(string);
+  }
+);
+
+When("the user {int} click with righClick on the mined {string}",async function (int, string) {
+  await buttonRightClick(string);
   await buttonRightClick(string);
   let valueCell;
   let cellTagged = await page.locator(`[data-testid="${string}"]`).innerText();
   if (int == 1) {
     valueCell = "\u{1F6A9}";
-  }else if(int == 2){
+  } else if (int == 2) {
     valueCell = "\u{2049}";
   }
-  expect(cellTagged).toBe(valueCell);
-  });
+  expect(cellTagged).toBe("");
+});
+
+Then("the cell {string} shouldn't show information",async function (string) {
+  let cellTagged = await page.locator(`[data-testid="${string}"]`).innerText();
+  expect(cellTagged).toBe("");
+  
+});
