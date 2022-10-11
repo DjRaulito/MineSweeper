@@ -182,12 +182,13 @@ Feature: Minesweeper
 
 
     #Flag Counter
-    @current
+    @done
     Scenario: Counter of mined symbol decrease when you placed a flag on a cell
         Given the "counter" is 10
         When the user tags as "mined" on the cell "1-1"
         Then the counter is 9
-
+    
+    @done
     Scenario: Counter of mined symbol increase when you remove a flag on a cell
         Given the "counter" is 10
         When the user untags as "mined" on the cell "1-1"

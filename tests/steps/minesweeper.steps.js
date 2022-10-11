@@ -207,3 +207,12 @@ Then('the counter is {int}',async function (int) {
   let flagCounterValue =await page.locator('[data-testid="flagCounter"]').innerText();
   expect(flagCounterValue).toBe(int.toString());
 });
+
+When('the user untags as {string} on the cell {string}',async function (string, string2) {
+  if (string == "mined") {
+    await buttonRightClick(string2);
+  } else if (string2 == "uncertain") {
+    await buttonRightClick(string2);
+    await buttonRightClick(string2);
+  }
+});
