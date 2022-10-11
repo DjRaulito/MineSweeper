@@ -174,14 +174,15 @@ Feature: Minesweeper
         When the user 1 click with righClick on the flag "1-1"
         Then the cell "1-1" should be tagged as "uncertain"
     
-    @current
+    @done
     Scenario: Remove a uncertain symbol with mouse
         Given the user tags as "uncertain" the cell "1-1"
-        When the user 1 click with "righClick" on the "flag" "1-1"
+        When the user 1 click with righClick on the flag "1-1"
         Then the cell "1-1" shouldn't show information
 
 
     #Flag Counter
+    @current
     Scenario: Counter of mined symbol decrease when you placed a flag on a cell
         Given the "counter" is 10
         When the user tags as "mined" on the cell "1-1"

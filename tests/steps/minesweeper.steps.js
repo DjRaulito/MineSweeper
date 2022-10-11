@@ -54,10 +54,7 @@ Then("the face should be {string}", async function (string) {
 });
 
 When("the user reveal the cell {string}", async function (string) {
-  let cellExposed = page.locator(`[data-testid="${string}"]`);
   await buttonClick(string);
-  const classCell = await cellExposed.getAttribute("class");
-  expect(classCell.includes("unHiddenCell")).toBeTruthy();
 });
 
 Then("the cell {string} should be {string}", async function (string, string2) {
@@ -127,8 +124,6 @@ When("the user tags as {string} the cell {string}",async function (string, strin
       await buttonRightClick(string2);
       string = "\u{003F}";
     }
-    let cellTagged = await page.locator(`[data-testid="${string2}"]`).innerText();
-    expect(cellTagged).toBe(string);
   });
 
 When("the user untags the cell {string}", async function (string) {
@@ -139,9 +134,6 @@ When("the user untags the cell {string}", async function (string) {
   }else if(cellPrevious == "\u{003F}"){
     await buttonRightClick(string);
   }
-  let cellTagged = await page.locator(`[data-testid="${string}"]`).innerText();
-
-  expect(cellTagged).toBe("");
 });
 
 Then("the cell {string} shouldn't be tagged", async function (string) {
@@ -152,17 +144,12 @@ Then("the cell {string} shouldn't be tagged", async function (string) {
 When(
   "the user {int} click with righClick on the cell {string}",
   async function (int, string) {
-    await buttonRightClick(string);
-    let valueCell;
-    let cellTagged = await page
-      .locator(`[data-testid="${string}"]`)
-      .innerText();
     if (int == 1) {
-      valueCell = "\u{1F6A9}";
+    await buttonRightClick(string);
     } else if (int == 2) {
-      valueCell = "\u{003F}";
+      await buttonRightClick(string);
+      await buttonRightClick(string);
     }
-    expect(cellTagged).toBe(valueCell);
   }
 );
 
@@ -178,21 +165,17 @@ Given(
     } else if (string2 == "uncertain") {
       string = "\u{003F}";
     }
-    expect(cellTagged).toBe(string);
+    // expect(cellTagged).toBe(string);
   }
 );
 
 When("the user {int} click with righClick on the mined {string}",async function (int, string) {
-  await buttonRightClick(string);
-  await buttonRightClick(string);
-  let valueCell;
-  let cellTagged = await page.locator(`[data-testid="${string}"]`).innerText();
   if (int == 1) {
-    valueCell = "\u{1F6A9}";
+    await buttonRightClick(string);  
   } else if (int == 2) {
-    valueCell = "\u{003F}";
+    await buttonRightClick(string);
+    await buttonRightClick(string);  
   }
-  expect(cellTagged).toBe("");
 });
 
 Then("the cell {string} shouldn't show information",async function (string) {
@@ -202,14 +185,10 @@ Then("the cell {string} shouldn't show information",async function (string) {
 });
 
 When('the user {int} click with righClick on the flag {string}',async function (int, string) {
-  await buttonRightClick(string);
-  
-    let valueCell;
-    let cellTagged = await page
-      .locator(`[data-testid="${string}"]`)
-      .innerText();
-    if (int == 1) {
-      valueCell = "\u{003F}";
-    }
-    expect(cellTagged).toBe(valueCell);
+  if (int == 1) {
+    await buttonRightClick(string);  
+  } else if (int == 2) {
+    await buttonRightClick(string);
+    await buttonRightClick(string);  
+  }
   });
