@@ -124,10 +124,22 @@ When('the user untags the cell {string}',async function (string) {
   // await buttonRightClick(string);
   let cellTagged = await page.locator(`[data-testid="${string}"]`).innerText();
 
-  expect(cellTagged).toBe("");
+  expect(cellTagged).toBeEmpty();
 });
 
 Then('the cell {string} shouldn\'t be tagged', async function (string) {
     let cellTagged = await page.locator(`[data-testid="${string}"]`).innerText();
-  expect(cellTagged).toBe("");
+  expect(cellTagged).toBeEmpty();
 });
+
+When('the user {int} click with righClick on the cell {string}',async function (int, string) {
+  await buttonRightClick(string);
+  let valueCell;
+  let cellTagged = await page.locator(`[data-testid="${string}"]`).innerText();
+  if (int == 1) {
+    valueCell = "\u{1F6A9}";
+  }else if(int == 2){
+    valueCell = "\u{2049}";
+  }
+  expect(cellTagged).toBe(valueCell);
+  });
