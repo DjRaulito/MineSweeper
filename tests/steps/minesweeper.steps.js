@@ -117,3 +117,17 @@ When('the user tags as {string} the cell {string}',async function (string, strin
   }
   expect(cellTagged).toBe(string);
 });
+
+When('the user untags the cell {string}',async function (string) {
+  await buttonRightClick(string);
+  await buttonRightClick(string);
+  // await buttonRightClick(string);
+  let cellTagged = await page.locator(`[data-testid="${string}"]`).innerText();
+
+  expect(cellTagged).toBe("");
+});
+
+Then('the cell {string} shouldn\'t be tagged', async function (string) {
+    let cellTagged = await page.locator(`[data-testid="${string}"]`).innerText();
+  expect(cellTagged).toBe("");
+});

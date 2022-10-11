@@ -137,11 +137,12 @@ Feature: Minesweeper
     Scenario: Tagging a cell as mined when the user suspects that the cell contains a mine
         When the user tags as "mined" the cell "2-2"
         Then the cell "2-2" should be tagged as "mined"
-
+    @done 
+#no commit
     Scenario: Untagging a mined cell
         Given the user tags as "mined" the cell "2-2"
         When the user untags the cell "2-2"
-        Then the cell "2-2" shouldn't be "tagged"
+        Then the cell "2-2" shouldn't be tagged
 
     Scenario: Put a mined symbol with mouse
         When the user 1 click with "righClick" on the "cell" "2-2"
