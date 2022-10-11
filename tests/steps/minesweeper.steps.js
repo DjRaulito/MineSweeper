@@ -132,9 +132,13 @@ When("the user tags as {string} the cell {string}",async function (string, strin
   });
 
 When("the user untags the cell {string}", async function (string) {
-  await buttonRightClick(string);
-  await buttonRightClick(string);
-  // await buttonRightClick(string);
+  let cellPrevious = await page.locator(`[data-testid="${string}"]`).innerText();
+  if (cellPrevious == "\u{1F6A9}") {
+    await buttonRightClick(string);
+    await buttonRightClick(string);
+  }else if(cellPrevious == "\u{003F}"){
+    await buttonRightClick(string);
+  }
   let cellTagged = await page.locator(`[data-testid="${string}"]`).innerText();
 
   expect(cellTagged).toBe("");

@@ -162,10 +162,11 @@ Feature: Minesweeper
         When the user tags as "uncertain" the cell "2-2"
         Then the cell "2-2" should be tagged as "uncertain"
 
+    @current
     Scenario: Untagging a uncertain symbol cell
         Given the user tags as "uncertain" the cell "2-2"
-        When the user untag as the cell "2-2"
-        Then the cell "2-2" shouldn't be "tagged"
+        When the user untags the cell "2-2"
+        Then the cell "2-2" shouldn't be tagged
 
     Scenario: Put a uncertain symbol with mouse
         Given the user tags as "mined" the cell "1-1"

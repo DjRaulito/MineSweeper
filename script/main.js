@@ -215,5 +215,7 @@ function TaggCell(cellClicked) {
     cellClicked.innerHTML = "&#63;";
   } else if (cellClicked.innerHTML == "&#63;") {
     cellClicked.innerHTML = "";
+  }else{
+    cellClicked.innerHTML = "";
   }
 }
