@@ -69,3 +69,6 @@ body {
 #inputNumber {
   margin-bottom: 50px;
 }
+.disabled{
+  pointer-events: none !important;
+}

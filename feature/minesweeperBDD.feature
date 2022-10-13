@@ -90,7 +90,7 @@ Feature: Minesweeper
     #     When the user reveal the cell "1-1"
     #     Then all the cells should be empty
 
-    @failed
+    @done
     Scenario: When the user reveals all the non mined cells, all the mines will be tagged as mined symbol
         Given the user loads in the board the following MockData: "**-oo"
         When the user reveal the cell "1-0"
@@ -208,6 +208,7 @@ Feature: Minesweeper
 
 
     #Disable
+    @current
     Scenario: Disable all the board when the user reveal a mine
         Given the user loads in the board the following MockData: "*o-o*"
         When the user reveal the cell "1-1"
@@ -232,6 +233,5 @@ Feature: Minesweeper
         When the user reveal the cell "0-1"
         And the user reveal the cell "1-0"
         Then the "face" should be "happy"
-
 
 # comprobar si solo son * y o

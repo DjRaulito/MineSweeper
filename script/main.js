@@ -57,6 +57,7 @@ function ShowBoard() {
       newDiv.setAttribute("id", r + "-" + c);
       newDiv.setAttribute("data-testid", r + "-" + c);
       newDiv.classList.add("hiddenCell");
+      newDiv.classList.add("cell");
       //click
       newDiv.addEventListener("click", (event) => {
         let cell = event.target.id;
@@ -67,19 +68,21 @@ function ShowBoard() {
           if (arrayInformation[row][column].isMine) {
             arrayInformation[row][column].isRevealed = true;
             RevealAllMines();
+            DisableBoard();
           } else {
             arrayInformation[row][column].isRevealed = true;
             cellsRevealed++;
             NumAdjacentMines(r, c);
             RevealAdjacentCells(r, c);
             ShowBoard();
+            GameStatus(r, c);
           }
         } else {
         }
       });
       newDiv.addEventListener("contextmenu", (event) => {
         event.preventDefault();
-        TaggCell(newDiv);
+        TaggCell(r, c);
       });
       document.getElementById("row" + r).append(newDiv);
       ShowUpdloadBoard(r, c);
@@ -88,8 +91,9 @@ function ShowBoard() {
 }
 function DeleteBoard() {
   while (document.getElementById("board").firstChild) {
-    document.getElementById("board")
-.removeChild(document.getElementById("board").firstChild);
+    document
+      .getElementById("board")
+      .removeChild(document.getElementById("board").firstChild);
   }
 }
 function ShowUpdloadBoard(r, c) {
@@ -110,7 +114,7 @@ function ShowUpdloadBoard(r, c) {
     cell.classList.remove("hiddenCell");
     cell.classList.add("unHiddenCell");
     cell.innerHTML = arrayInformation[r][c].numberOfMinesAround;
-    GameStatus(r, c);
+    // GameStatus(r, c);
   }
 }
 
@@ -140,10 +144,9 @@ function PlaceMinesRandom() {
       i--;
     }
     arrayInformation[rowMinedPosition][columnMinedPosition].isMine = true;
-    minesPlaced = i +1;
+    minesPlaced = i + 1;
   }
-UploadMinesCounter();
-
+  UploadMinesCounter();
 }
 
 function PlaceMinesMockData() {
@@ -156,7 +159,7 @@ function PlaceMinesMockData() {
       }
     }
   }
-UploadMinesCounter();
+  UploadMinesCounter();
 }
 
 function UploadMinesCounter() {
@@ -167,6 +170,7 @@ function GameStatus(row, column) {
     document.getElementById("face").innerHTML = "sad";
   } else if (cellsRevealed == rows * columns - minesPlaced) {
     document.getElementById("face").innerHTML = "happy";
+    TagAllMines(row, column);
   }
 }
 
@@ -201,20 +205,20 @@ function RevealAdjacentCells(r, c) {
     for (let row = 0; row < 3; row++) {
       for (let column = 0; column < 3; column++) {
         try {
-        if (arrayInformation[r - 1 + row][c - 1 + column].isMine == false){
-          arrayInformation[r - 1 + row][c - 1 + column].isRevealed = true
-          NumAdjacentMines(r - 1 + row,c - 1 + column);
-          
+          if (arrayInformation[r - 1 + row][c - 1 + column].isMine == false) {
+            arrayInformation[r - 1 + row][c - 1 + column].isRevealed = true;
+            NumAdjacentMines(r - 1 + row, c - 1 + column);
+          }
+        } catch {
+          // console.log("eres bobo que te sales del rango anda");
         }
-      } catch {
-        // console.log("eres bobo que te sales del rango anda");
-      }
       }
     }
   }
 }
 
-function TaggCell(cellClicked) {
+function TaggCell(row, column) {
+  let cellClicked = document.getElementById(row + "-" + column);
   if (cellClicked.innerHTML == "") {
     cellClicked.innerHTML = "🚩";
     minesPlaced--;
@@ -224,9 +228,25 @@ function TaggCell(cellClicked) {
     cellClicked.innerHTML = "&#63;";
   } else if (cellClicked.innerHTML == "&#63;") {
     cellClicked.innerHTML = "";
-  }else{
+  } else {
     cellClicked.innerHTML = "";
   }
-UploadMinesCounter();
+  UploadMinesCounter();
+}
+function TagAllMines() {
+  for (let r = 0; r < arrayInformation.length; r++) {
+    for (let c = 0; c < arrayInformation.length; c++) {
+      if (arrayInformation[r][c].isMine) {
+        TaggCell(r, c);
+      }
+    }
+  }
+}
 
+function DisableBoard() {
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < columns; c++) {
+    document.getElementById(r+"-"+c).classList.add("disabled");
+    }
+  }
 }

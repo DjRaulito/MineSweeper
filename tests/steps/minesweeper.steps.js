@@ -216,3 +216,9 @@ When('the user untags as {string} on the cell {string}',async function (string, 
     await buttonRightClick(string2);
   }
 });
+
+Then('all the cells are disabled',async function () {
+  const numHiddenCellsBoard = await page.locator('[class=".disabled"]');
+  const numCellsBoard = await page.locator('[class=".cell"]');
+  expect(numHiddenCellsBoard.length).toBe(numCellsBoard.length);
+});
