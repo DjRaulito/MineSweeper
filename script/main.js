@@ -58,6 +58,8 @@ function ShowBoard() {
       newDiv.setAttribute("data-testid", r + "-" + c);
       newDiv.classList.add("hiddenCell");
       newDiv.classList.add("cell");
+      newDiv.classList.add("enabled");
+
       //click
       newDiv.addEventListener("click", (event) => {
         let cell = event.target.id;
@@ -233,6 +235,7 @@ function TaggCell(row, column) {
   }
   UploadMinesCounter();
 }
+
 function TagAllMines() {
   for (let r = 0; r < arrayInformation.length; r++) {
     for (let c = 0; c < arrayInformation.length; c++) {
@@ -246,6 +249,7 @@ function TagAllMines() {
 function DisableBoard() {
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < columns; c++) {
+    document.getElementById(r+"-"+c).classList.remove("enabled");
     document.getElementById(r+"-"+c).classList.add("disabled");
     }
   }

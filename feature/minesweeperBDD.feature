@@ -208,7 +208,7 @@ Feature: Minesweeper
 
 
     #Disable
-    @current
+    @done
     Scenario: Disable all the board when the user reveal a mine
         Given the user loads in the board the following MockData: "*o-o*"
         When the user reveal the cell "1-1"
@@ -216,6 +216,7 @@ Feature: Minesweeper
 
 
     #Face
+    @done
     Scenario:The user reset the board
         Given the user loads in the board the following MockData: "n!"
         When the user reset the board
@@ -223,11 +224,12 @@ Feature: Minesweeper
         And the cell "0-1" should be "hidden"
         And all the cell are enabled
 
+    @current
     Scenario: Reset the board with press on the face
         Given the user loads in the board the following MockData: "*o-o*"
         When the user press on the face
         Then the board is reset
-
+    
     Scenario: When the user win the game the face is happy
         Given the user loads in the board the following MockData: "*o-o*"
         When the user reveal the cell "0-1"

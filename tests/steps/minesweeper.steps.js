@@ -58,8 +58,13 @@ When("the user reveal the cell {string}", async function (string) {
 });
 
 Then("the cell {string} should be {string}", async function (string, string2) {
-  let cellClicked = await page.locator(`[data-testid="${string}"]`).innerText();
-  expect(cellClicked).toBe(string2);
+  let cellClicked = await page.locator(`[data-testid="${string}"]`);
+  if (string2 == "hidden") {
+    const classCell = await cellClicked.getAttribute("class");
+  expect(classCell.includes("hidden")).toBeTruthy();
+  }else{
+  expect(cellClicked.innerText()).toBe(string2);
+  }
 });
 
 Then("the user should {string}", async function (string) {
@@ -219,6 +224,16 @@ When('the user untags as {string} on the cell {string}',async function (string, 
 
 Then('all the cells are disabled',async function () {
   const numHiddenCellsBoard = await page.locator('[class=".disabled"]');
+  const numCellsBoard = await page.locator('[class=".cell"]');
+  expect(numHiddenCellsBoard.length).toBe(numCellsBoard.length);
+});
+
+When('the user reset the board',async function () {
+  await buttonClick("face");
+});
+
+Then('all the cell are enabled',async function () {
+  const numHiddenCellsBoard = await page.locator('[class=".enabled"]');
   const numCellsBoard = await page.locator('[class=".cell"]');
   expect(numHiddenCellsBoard.length).toBe(numCellsBoard.length);
 });
