@@ -206,7 +206,6 @@ Feature: Minesweeper
         When the user reveal the cell "mined"
         Then time should stop
 
-
     #Disable
     @done
     Scenario: Disable all the board when the user reveal a mine
@@ -224,12 +223,13 @@ Feature: Minesweeper
         And the cell "0-1" should be "hidden"
         And all the cell are enabled
 
-    @current
+    @done
     Scenario: Reset the board with press on the face
         Given the user loads in the board the following MockData: "*o-o*"
         When the user press on the face
         Then the board is reset
-    
+
+    @done
     Scenario: When the user win the game the face is happy
         Given the user loads in the board the following MockData: "*o-o*"
         When the user reveal the cell "0-1"

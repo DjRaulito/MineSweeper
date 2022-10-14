@@ -58,12 +58,12 @@ When("the user reveal the cell {string}", async function (string) {
 });
 
 Then("the cell {string} should be {string}", async function (string, string2) {
-  let cellClicked = await page.locator(`[data-testid="${string}"]`);
+  let cellClicked = await page.locator(`[data-testid="${string}"]`).innerText();
   if (string2 == "hidden") {
-    const classCell = await cellClicked.getAttribute("class");
+    const classCell = await page.locator(`[data-testid="${string}"]`).getAttribute("class");
   expect(classCell.includes("hidden")).toBeTruthy();
   }else{
-  expect(cellClicked.innerText()).toBe(string2);
+  expect(cellClicked).toBe(string2);
   }
 });
 
@@ -236,4 +236,18 @@ Then('all the cell are enabled',async function () {
   const numHiddenCellsBoard = await page.locator('[class=".enabled"]');
   const numCellsBoard = await page.locator('[class=".cell"]');
   expect(numHiddenCellsBoard.length).toBe(numCellsBoard.length);
+});
+
+When('the user press on the face',async function () {
+  await buttonClick("face");
+});
+Then('the board is reset',async function () {
+  const numHiddenCellsBoard = await page.locator('[class=".enabled"]');
+  const numCellsBoard = await page.locator('[class=".cell"]');
+  expect(numHiddenCellsBoard.length).toBe(numCellsBoard.length);
+});
+
+Then('the {string} should be {string}',async function (string, string2) {
+  let cellExposed = await page.locator(`[data-testid="${string}"]`).innerText();
+  expect(cellExposed).toBe(string2);
 });

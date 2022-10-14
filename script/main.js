@@ -7,6 +7,7 @@ window.onload = function () {
   }
   ShowBoard();
 };
+
 let columns = 8;
 let rows = 8;
 let arrayBoard;
@@ -16,12 +17,14 @@ const numMines = 10;
 let minesPlaced = 0;
 let cellsRevealed = 0;
 let arrayInformation = [];
+let seconds = 0;
+let timer = false;
 
 let defaultCellValues = {
   columnY: 0,
   rowX: 0,
   isRevealed: false,
-  userTag: " ",
+  // userTag: " ",
   isMine: false,
   numberOfMinesAround: 0,
 };
@@ -59,38 +62,41 @@ function ShowBoard() {
       newDiv.classList.add("hiddenCell");
       newDiv.classList.add("cell");
       newDiv.classList.add("enabled");
-
-      //click
-      newDiv.addEventListener("click", (event) => {
-        let cell = event.target.id;
-        cell = cell.split("-");
-        let row = cell[0];
-        let column = cell[1];
-        if (arrayInformation[row][column].isRevealed == false) {
-          if (arrayInformation[row][column].isMine) {
-            arrayInformation[row][column].isRevealed = true;
-            RevealAllMines();
-            DisableBoard();
-          } else {
-            arrayInformation[row][column].isRevealed = true;
-            cellsRevealed++;
-            NumAdjacentMines(r, c);
-            RevealAdjacentCells(r, c);
-            ShowBoard();
-            GameStatus(r, c);
-          }
-        } else {
-        }
+      // if (arrayInformation[r][c].isRevealed) {
+      newDiv.addEventListener("click", function () {
+        RevealCell(r, c);
       });
+      // }
       newDiv.addEventListener("contextmenu", (event) => {
         event.preventDefault();
         TaggCell(r, c);
       });
       document.getElementById("row" + r).append(newDiv);
-      ShowUpdloadBoard(r, c);
+      UploadCell(r, c);
     }
   }
 }
+
+function RevealCell(row, column) {
+  if (!timer) {
+    timer = true;
+    TimerStatus();
+  }
+  if (arrayInformation[row][column].isMine) {
+    arrayInformation[row][column].isRevealed = true;
+    timer = false;
+    RevealAllMines();
+    DisableBoard();
+  } else {
+    arrayInformation[row][column].isRevealed = true;
+    cellsRevealed++;
+    NumAdjacentMines(row, column);
+    RevealAdjacentCells(row, column);
+    ShowBoard();
+    GameStatus(row, column);
+  }
+}
+
 function DeleteBoard() {
   while (document.getElementById("board").firstChild) {
     document
@@ -98,7 +104,8 @@ function DeleteBoard() {
       .removeChild(document.getElementById("board").firstChild);
   }
 }
-function ShowUpdloadBoard(r, c) {
+
+function UploadCell(r, c) {
   let cell = document.getElementById(r + "-" + c);
   if (
     arrayInformation[r][c].isMine == true &&
@@ -116,7 +123,6 @@ function ShowUpdloadBoard(r, c) {
     cell.classList.remove("hiddenCell");
     cell.classList.add("unHiddenCell");
     cell.innerHTML = arrayInformation[r][c].numberOfMinesAround;
-    // GameStatus(r, c);
   }
 }
 
@@ -164,24 +170,12 @@ function PlaceMinesMockData() {
   UploadMinesCounter();
 }
 
-function UploadMinesCounter() {
-  document.getElementById("flagCounter").innerHTML = minesPlaced;
-}
-function GameStatus(row, column) {
-  if (arrayInformation[row][column].isMine) {
-    document.getElementById("face").innerHTML = "sad";
-  } else if (cellsRevealed == rows * columns - minesPlaced) {
-    document.getElementById("face").innerHTML = "happy";
-    TagAllMines(row, column);
-  }
-}
-
 function RevealAllMines() {
   for (let r = 0; r < arrayInformation.length; r++) {
     for (let c = 0; c < arrayInformation.length; c++) {
       if (arrayInformation[r][c].isMine) {
         arrayInformation[r][c].isRevealed = true;
-        ShowUpdloadBoard(r, c);
+        UploadCell(r, c);
       }
     }
   }
@@ -202,6 +196,17 @@ function NumAdjacentMines(r, c) {
     }
   }
 }
+
+function TagAllMines() {
+  for (let r = 0; r < arrayInformation.length; r++) {
+    for (let c = 0; c < arrayInformation.length; c++) {
+      if (arrayInformation[r][c].isMine) {
+        TaggCell(r, c);
+      }
+    }
+  }
+}
+
 function RevealAdjacentCells(r, c) {
   if (arrayInformation[r][c].numberOfMinesAround == 0) {
     for (let row = 0; row < 3; row++) {
@@ -236,21 +241,32 @@ function TaggCell(row, column) {
   UploadMinesCounter();
 }
 
-function TagAllMines() {
-  for (let r = 0; r < arrayInformation.length; r++) {
-    for (let c = 0; c < arrayInformation.length; c++) {
-      if (arrayInformation[r][c].isMine) {
-        TaggCell(r, c);
-      }
+function TimerStatus() {
+  window.setInterval(function () {
+    if (timer) {
+      document.getElementById("timer").innerHTML = seconds;
+      seconds++;
     }
-  }
+  }, 1000);
 }
 
 function DisableBoard() {
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < columns; c++) {
-    document.getElementById(r+"-"+c).classList.remove("enabled");
-    document.getElementById(r+"-"+c).classList.add("disabled");
+      document.getElementById(r + "-" + c).classList.remove("enabled");
+      document.getElementById(r + "-" + c).classList.add("disabled");
     }
+  }
+}
+
+function UploadMinesCounter() {
+  document.getElementById("flagCounter").innerHTML = minesPlaced;
+}
+function GameStatus(row, column) {
+  if (arrayInformation[row][column].isMine) {
+    document.getElementById("face").innerHTML = "sad";
+  } else if (cellsRevealed == rows * columns - minesPlaced) {
+    document.getElementById("face").innerHTML = "happy";
+    TagAllMines(row, column);
   }
 }
